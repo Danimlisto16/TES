@@ -30,7 +30,9 @@ public class ontmain {
         OntModel model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM); model.read("/home/dyyysof/Documents/ont.owl","RDF/XML");
         
         System.out.println("PRUEBA ONTOLOGÍAS");
-        String queryString = "PREFIX ont: <http://www.semanticweb.org/dyyysof/ontologies/2022/1/untitled-ontology-25#>" +
+        String queryString = 
+                            "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+
+                            "PREFIX ont: <http://www.semanticweb.org/dyyysof/ontologies/2022/1/untitled-ontology-25#>" +
                              "SELECT  ?area_especialidad ?centro" + 
                              "		WHERE {" +
                              "				?cen ont:tiene_are ?esp."+
