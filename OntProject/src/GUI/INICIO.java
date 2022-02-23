@@ -4,7 +4,10 @@
  */
 package GUI;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 import org.apache.jena.ontology.OntModel;
 import org.apache.jena.ontology.OntModelSpec;
 import org.apache.jena.query.Query;
@@ -22,7 +25,7 @@ import org.apache.jena.rdf.model.ModelFactory;
 public class INICIO extends javax.swing.JFrame {
 
     //INICIALIZAR JLIST MEDICO
-    DefaultListModel<String> modelo=new DefaultListModel<>();
+    
     /**
      * Creates new form INICIO
      */
@@ -44,21 +47,42 @@ public class INICIO extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         tabMedico = new javax.swing.JTabbedPane();
         opcMedicinas = new javax.swing.JTabbedPane();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jtMedicinas = new javax.swing.JTable();
         opcCentroSalud = new javax.swing.JTabbedPane();
+        scroolbar2 = new javax.swing.JScrollPane();
+        jtCentroSalud = new javax.swing.JTable();
         opcAreaEsp = new javax.swing.JTabbedPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtAreaEspecialidad = new javax.swing.JTable();
         opcPacientes = new javax.swing.JTabbedPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtPacientes = new javax.swing.JTable();
         opcTratamiento = new javax.swing.JTabbedPane();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtTratamiento = new javax.swing.JTable();
         opcEspecialidades = new javax.swing.JTabbedPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtEspecialidades = new javax.swing.JTable();
         opcEnfermedades = new javax.swing.JTabbedPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtEnfermedades = new javax.swing.JTable();
         opcMedicos = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtMedicos = new javax.swing.JTable();
         opcConsultas = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel1.setText("PROYECTO - Gestión de ontologías para un sistema de consultas inteligentes");
@@ -71,21 +95,8 @@ public class INICIO extends javax.swing.JFrame {
                 tabMedicoMouseClicked(evt);
             }
         });
-        tabMedico.addTab("MEDICINAS", opcMedicinas);
-        tabMedico.addTab("CENTRO SALUD", opcCentroSalud);
-        tabMedico.addTab("ÁREA ESPECIALIDAD", opcAreaEsp);
-        tabMedico.addTab("PACIENTES", opcPacientes);
-        tabMedico.addTab("TRATAMIENTO", opcTratamiento);
-        tabMedico.addTab("ESPECIALIDADES", opcEspecialidades);
-        tabMedico.addTab("ENFERMEDADES", opcEnfermedades);
 
-        opcMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                opcMedicosMouseClicked(evt);
-            }
-        });
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtMedicinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -96,13 +107,159 @@ public class INICIO extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getAccessibleContext().setAccessibleName("jtMedico");
+        jScrollPane7.setViewportView(jtMedicinas);
+
+        opcMedicinas.addTab("tab1", jScrollPane7);
+
+        tabMedico.addTab("MEDICINAS", opcMedicinas);
+
+        jtCentroSalud.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scroolbar2.setViewportView(jtCentroSalud);
+
+        opcCentroSalud.addTab("tab1", scroolbar2);
+
+        tabMedico.addTab("CENTRO SALUD", opcCentroSalud);
+
+        jtAreaEspecialidad.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jtAreaEspecialidad);
+
+        opcAreaEsp.addTab("tab1", jScrollPane6);
+
+        tabMedico.addTab("ÁREA ESPECIALIDAD", opcAreaEsp);
+
+        jtPacientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jtPacientes);
+
+        opcPacientes.addTab("tab1", jScrollPane5);
+
+        tabMedico.addTab("PACIENTES", opcPacientes);
+
+        jtTratamiento.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jtTratamiento);
+
+        opcTratamiento.addTab("tab1", jScrollPane4);
+
+        tabMedico.addTab("TRATAMIENTO", opcTratamiento);
+
+        jtEspecialidades.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jtEspecialidades);
+
+        opcEspecialidades.addTab("tab1", jScrollPane3);
+
+        tabMedico.addTab("ESPECIALIDADES", opcEspecialidades);
+
+        jtEnfermedades.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jtEnfermedades);
+
+        opcEnfermedades.addTab("tab1", jScrollPane2);
+
+        tabMedico.addTab("ENFERMEDADES", opcEnfermedades);
+
+        opcMedicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                opcMedicosMouseClicked(evt);
+            }
+        });
+
+        jtMedicos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jtMedicos);
+        jtMedicos.getAccessibleContext().setAccessibleName("jtMedico");
 
         opcMedicos.addTab("tab1", jScrollPane1);
 
         tabMedico.addTab("MEDICOS", opcMedicos);
         opcMedicos.getAccessibleContext().setAccessibleName("pnMedicos");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "¿Qué personal de salud se encuentra en un centro de salud?", "¿Qué áreas de especialidad tiene un centro de salud?", "¿Qué especialidad tiene un personal de salud ?", "¿Qué áreas de especialidad pertenece a un centro de salud XXX ?", "¿A qué  área de salud  pertenece el personal de salud con nombre XXX?", "¿Qué pacientes menores de 20 años han sido atendidos por un personal de salud XXX?", "¿Qué medicinas ha recetado un personal de salud?" }));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(95, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 838, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(129, 129, 129))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(390, Short.MAX_VALUE))
+        );
+
+        opcConsultas.addTab("tab1", jPanel2);
 
         tabMedico.addTab("CONSULTAS", opcConsultas);
 
@@ -170,12 +327,88 @@ public class INICIO extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void tabMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMedicoMouseClicked
+        //INICIALIZAR TODAS LAS TABLAS
+        //TABLA MEDICINAS
+        String[] tblHeadMedicinas={"Código","Nombre","Nombre Genérico"};
+        DefaultTableModel modelMedicinas = new DefaultTableModel(tblHeadMedicinas,0);
+        jtMedicinas.setModel(modelMedicinas);
+        Object[] rowMedicinas = { "1", "Acetaminofen","Paracetamol" };
+        modelMedicinas.addRow(rowMedicinas);
+        
+        
+        //CENTRO DE SALUD
+        String[] tblHeadCentro={"Código","Nombre","Capacidad"," Ubicación","Ciudad"};
+        DefaultTableModel modelCentro = new DefaultTableModel(tblHeadCentro,0);
+        jtCentroSalud.setModel(modelCentro);
+        Object[] rowCentro = { "1", "IESS Riobamba","800","Av. José de Sucre", "Riobamba" };
+        modelCentro.addRow(rowCentro);
+
+
+        //AREA DE ESPECIALIDAD
+        String[] tblHeadareaEsp={"Código","Nombre","Descripción"};
+        DefaultTableModel modelareaEsp = new DefaultTableModel(tblHeadareaEsp,0);
+        jtAreaEspecialidad.setModel(modelareaEsp);
+        Object[] rowareaEsp = { "1", "Alergología","Tratamiento de alergias" };
+        modelareaEsp.addRow(rowareaEsp);
+        
+        
+        //PACIENTES
+        String[] tblHeadPaciente={"Código","Nombre","Edad"," Cédula"};
+        DefaultTableModel modelPaciente = new DefaultTableModel(tblHeadPaciente,0);
+        jtPacientes.setModel(modelPaciente);
+        Object[] rowPaciente = { "1", "Jose ","15","0604402305" };
+        modelPaciente.addRow(rowPaciente);
+            
+
+        //TRATAMIENTO
+        String[] tblHeadTratamiento={"Código","Descripción"};
+        DefaultTableModel modelTratamiento = new DefaultTableModel(tblHeadTratamiento,0);
+        jtTratamiento.setModel(modelTratamiento);
+        Object[] rowTratamiento = { "1", "2 veces al día" };
+        modelTratamiento.addRow(rowTratamiento);
+
+
+        //ESPECIALIDADES
+        String[] tblHeadEspecialidad={"Código","Nombre"};
+        DefaultTableModel modelEspecialidad = new DefaultTableModel(tblHeadEspecialidad,0);
+        jtEspecialidades.setModel(modelEspecialidad);
+        Object[] rowEspecialidad = { "1", "Alergología"};
+        modelEspecialidad.addRow(rowEspecialidad);
+        
+
+
+        //ENFERMEDADES
+         String[] tblHeadEnfermedades={"Código","Nombre"};
+        DefaultTableModel modelEnfermedades = new DefaultTableModel(tblHeadEnfermedades,0);
+        jtEnfermedades.setModel(modelEnfermedades);
+        Object[] rowEnfermedades = { "1", "COVID-19" };
+        modelEnfermedades.addRow(rowEnfermedades);
+
+
+        //MEDICOS
+        
+        String[] tblHead={"Codigo","Nombre","Cedula","Edad"};
+        DefaultTableModel model = new DefaultTableModel(tblHead,0);
+        jtMedicos.setModel(model);
+        Object[] row = { "1", "Juan","0604402305","16" };
+        model.addRow(row);
+
+
+        //CONSULTAS
+        
+        
         
     }//GEN-LAST:event_tabMedicoMouseClicked
 
     private void opcMedicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_opcMedicosMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_opcMedicosMouseClicked
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        
+
+        
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -246,13 +479,28 @@ public class INICIO extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JTable jtAreaEspecialidad;
+    private javax.swing.JTable jtCentroSalud;
+    private javax.swing.JTable jtEnfermedades;
+    private javax.swing.JTable jtEspecialidades;
+    private javax.swing.JTable jtMedicinas;
+    private javax.swing.JTable jtMedicos;
+    private javax.swing.JTable jtPacientes;
+    private javax.swing.JTable jtTratamiento;
     private javax.swing.JTabbedPane opcAreaEsp;
     private javax.swing.JTabbedPane opcCentroSalud;
     private javax.swing.JTabbedPane opcConsultas;
@@ -262,6 +510,7 @@ public class INICIO extends javax.swing.JFrame {
     private javax.swing.JTabbedPane opcMedicos;
     private javax.swing.JTabbedPane opcPacientes;
     private javax.swing.JTabbedPane opcTratamiento;
+    private javax.swing.JScrollPane scroolbar2;
     private javax.swing.JTabbedPane tabMedico;
     // End of variables declaration//GEN-END:variables
 }
