@@ -1,0 +1,13 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+PREFIX ont: <http://www.semanticweb.org/dyyysof/ontologies/2022/1/untitled-ontology-25#>
+
+SELECT ?centro_salud ?area_esp
+	WHERE { 
+		?centro ont:tiene_are ?area.
+		?centro ont:nombre ?centro_salud.
+		?area ont:nombre ?area_esp.
+	}
