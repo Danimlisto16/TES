@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt tranPersalud change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java tranPersalud edit this template
  */
 package GUI;
 
@@ -84,6 +84,8 @@ public class INICIO extends javax.swing.JFrame {
         opcConsultas = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        jtConsultas = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
@@ -251,7 +253,25 @@ public class INICIO extends javax.swing.JFrame {
         tabMedico.addTab("MEDICOS", opcMedicos);
         opcMedicos.getAccessibleContext().setAccessibleName("pnMedicos");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "¿Qué personal de salud se encuentra en un centro de salud?", "¿Qué áreas de especialidad tiene un centro de salud?", "¿Qué especialidad tiene un personal de salud ?", "¿Qué áreas de especialidad pertenece a un centro de salud XXX ?", "¿A qué  área de salud  pertenece el personal de salud con nombre XXX?", "¿Qué pacientes menores de 20 años han sido atendidos por un personal de salud XXX?", "¿Qué medicinas ha recetado un personal de salud?" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "¿Qué personal de salud se encuentra en un centro de salud?", "¿Qué áreas de especialidad tiene un centro de salud?", "¿Qué especialidades tienen el personal de salud ?", "¿Qué centro de salud tiene un áreas de especialidad llamada \"Alergología\" ?", "¿Qué pacientes menores de 20 años han sido atendidos por \"Jose Herrera\"?", "¿Qué medicinas ha recetado el persnal de salud?" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
+        jtConsultas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane8.setViewportView(jtConsultas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -259,7 +279,9 @@ public class INICIO extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(51, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 952, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane8)
+                    .addComponent(jComboBox1, 0, 952, Short.MAX_VALUE))
                 .addGap(59, 59, 59))
         );
         jPanel2Layout.setVerticalGroup(
@@ -267,7 +289,9 @@ public class INICIO extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(390, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         opcConsultas.addTab("tab1", jPanel2);
@@ -339,73 +363,75 @@ public class INICIO extends javax.swing.JFrame {
 
     private void tabMedicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabMedicoMouseClicked
         //INICIALIZAR TODAS LAS TABLAS
-        transaccionesOWL to = new transaccionesOWL();
-        ResultSet r = to.primeraConsulta();
-        
+        transaccionesOWL tranPersalud = new transaccionesOWL();
+        ResultSet rPer = tranPersalud.cargarConsulta("src/querys/listarPersalud.txt");
+        String[] tblHeadPersalud = {"codigo","nombre","cedula","edad"};
+        DefaultTableModel modelPer = new DefaultTableModel(tblHeadPersalud,0);
+        jtMedicos.setModel(modelPer);
+        tranPersalud.ConstructionTable(rPer, tblHeadPersalud, modelPer, jtMedicos);
         
         
         //TABLA MEDICINAS
-        String[] tblHeadMedicinas = {"codigo","nombre","cedula","edad"};
-        DefaultTableModel model = new DefaultTableModel(tblHeadMedicinas,0);
-        jtMedicinas.setModel(model);
-        //Object[] rowMedicinas = { "1", "Acetaminofen","Paracetamol" };
-        //model.addRow(rowMedicinas);
-        to.ConstructionTable(r, tblHeadMedicinas, model, jtMedicinas);
-        
-        
-        
+        transaccionesOWL tranMedicina = new transaccionesOWL();
+        ResultSet rMed = tranMedicina.cargarConsulta("src/querys/listarMedicina.txt");
+        String[] tblMedicina = {"codigo","nombre","nom_gen"};
+        DefaultTableModel modelMed = new DefaultTableModel(tblMedicina,0);
+        jtMedicinas.setModel(modelMed);
+        tranMedicina.ConstructionTable(rMed, tblMedicina, modelMed, jtMedicinas);
         
         
         //CENTRO DE SALUD
-        String[] tblHeadCentro = {"Código","Nombre","Capacidad"," Ubicación","Ciudad"};
-        Object[] rowCentro = { "1", "IESS Riobamba","800","Av. José de Sucre", "Riobamba" };
-        inicializarTabla(jtCentroSalud,tblHeadCentro,rowCentro);
+        transaccionesOWL tranCentro = new transaccionesOWL();
+        ResultSet rCen = tranCentro.cargarConsulta("src/querys/listarCentro.txt");
+        String[] tblCentro = {"codigo","nombre","capacidad","ubicacion","ciudad"};
+        DefaultTableModel modelCen = new DefaultTableModel(tblCentro,0);
+        jtCentroSalud.setModel(modelCen);
+        tranCentro.ConstructionTable(rCen, tblCentro, modelCen, jtCentroSalud);
         
-        
-
-
+       
         //AREA DE ESPECIALIDAD
-        String[] tblHeadareaEsp={"Código","Nombre","Descripción"};
-        Object[] rowareaEsp = { "1", "Alergología","Tratamiento de alergias" };
-        inicializarTabla(jtAreaEspecialidad,tblHeadareaEsp,rowareaEsp);
+        transaccionesOWL tranArea = new transaccionesOWL();
+        ResultSet rArea = tranArea.cargarConsulta("src/querys/listarArea.txt");
+        String[] tblArea = {"codigo","nombre","descripcion"};
+        DefaultTableModel modelArea = new DefaultTableModel(tblArea,0);
+        jtAreaEspecialidad.setModel(modelArea);
+        tranArea.ConstructionTable(rArea, tblArea, modelArea, jtAreaEspecialidad);
         
         
         //PACIENTES
-        String[] tblHeadPaciente={"Código","Nombre","Edad"," Cédula"};
-        Object[] rowPaciente = { "1", "Jose ","15","0604402305" };
-        inicializarTabla(jtPacientes,tblHeadPaciente,rowPaciente);
+        transaccionesOWL tranPaciente = new transaccionesOWL();
+        ResultSet rPac = tranPaciente.cargarConsulta("src/querys/listarPacientes.txt");
+        String[] tblHeadPaciente = {"codigo","nombre","cedula","edad"};
+        DefaultTableModel modelPac = new DefaultTableModel(tblHeadPaciente,0);
+        jtPacientes.setModel(modelPac);
+        tranPaciente.ConstructionTable(rPac, tblHeadPaciente, modelPac, jtPacientes);
             
 
         //TRATAMIENTO
-        String[] tblHeadTratamiento={"Código","Descripción"};
-        Object[] rowTratamiento = { "1", "2 veces al día" };
-        inicializarTabla(jtTratamiento,tblHeadTratamiento,rowTratamiento);
+        transaccionesOWL tranTratamiento = new transaccionesOWL();
+        ResultSet rTrat = tranTratamiento.cargarConsulta("src/querys/listarTrat.txt");
+        String[] tblTratamiento = {"codigo","descripcion"};
+        DefaultTableModel modelTrat = new DefaultTableModel(tblTratamiento,0);
+        jtTratamiento.setModel(modelTrat);
+        tranTratamiento.ConstructionTable(rTrat, tblTratamiento, modelTrat, jtTratamiento);
+        
 
         //ESPECIALIDADES
-        String[] tblHeadEspecialidad={"Código","Nombre"};
-        Object[] rowEspecialidad = { "1", "Alergología"};
-        inicializarTabla(jtEspecialidades,tblHeadEspecialidad,rowEspecialidad);
+        transaccionesOWL tranEspecialidad = new transaccionesOWL();
+        ResultSet rEsp = tranEspecialidad.cargarConsulta("src/querys/listarEsp.txt");
+        String[] tblEsp = {"codigo","nombre"};
+        DefaultTableModel modelEsp = new DefaultTableModel(tblEsp,0);
+        jtEspecialidades.setModel(modelEsp);
+        tranEspecialidad.ConstructionTable(rEsp, tblEsp, modelEsp, jtEspecialidades);
 
 
         //ENFERMEDADES
-         String[] tblHeadEnfermedades={"Código","Nombre"};
-        Object[] rowEnfermedades = { "1", "COVID-19" };
-        inicializarTabla(jtEnfermedades,tblHeadEnfermedades,rowEnfermedades);
-
-        //PERSALUD
-        
-        String[] tblHead={"Codigo","Nombre","Cedula","Edad"};
-        
-        //conectarse al owl y hacer la consulta
-        
-        Object[] row = { "1", "Juan","0604402305","16" };
-        inicializarTabla(jtMedicos,tblHead,row);
-        
-
-
-        //CONSULTAS
-        
-        
+        transaccionesOWL tranEnfermedad = new transaccionesOWL();
+        ResultSet rEnf = tranEnfermedad.cargarConsulta("src/querys/listarEnfermedades.txt");
+        String[] tblEnfermedades = {"codigo","nombre"};
+        DefaultTableModel modelEnf = new DefaultTableModel(tblEnfermedades,0);
+        jtEnfermedades.setModel(modelEnf);
+        tranEnfermedad.ConstructionTable(rEnf, tblEnfermedades, modelEnf, jtEnfermedades);
         
     }//GEN-LAST:event_tabMedicoMouseClicked
 
@@ -422,6 +448,63 @@ public class INICIO extends javax.swing.JFrame {
 
         
     }//GEN-LAST:event_formWindowOpened
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+
+        System.out.println(jComboBox1.getSelectedIndex());
+        
+        transaccionesOWL tranEnfermedad = new transaccionesOWL();
+        /**/
+        ResultSet rEnf = null;
+        
+        String[] tblEncabezado = {};
+        
+        String[] c1  = {"centro_salud","personal_salud"};
+        String[] c2  = {"centro_salud","area_esp"};
+        String[] c3  = {"especialidad","personal_salud"};
+        String[] c4  = {"area_especialidad","centro"};
+        String[] c5  = {"paciente"};
+        String[] c6  = {"medicina","recetado_por"};
+        
+        DefaultTableModel modelEnf;
+        
+        switch(jComboBox1.getSelectedIndex()+1){
+            case 1 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c1.txt");
+                        tblEncabezado = c1;
+            }
+            break;
+            case 2 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c2.txt");
+                        tblEncabezado = c2;
+            }
+            break;
+            case 3 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c3.txt");
+                        tblEncabezado = c3;
+            }
+            break;
+            case 4 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c4.txt");
+                        tblEncabezado = c4;
+            }
+            break;
+            case 5 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c5.txt");
+                        tblEncabezado = c5;
+            }
+            break;
+            case 6 : {
+                        rEnf = tranEnfermedad.cargarConsulta("src/querys/c6.txt");
+                        tblEncabezado = c6;
+            }
+            break;
+        }
+        
+        modelEnf = new DefaultTableModel(tblEncabezado,0);
+        jtConsultas.setModel(modelEnf);
+        tranEnfermedad.ConstructionTable(rEnf, tblEncabezado, modelEnf, jtConsultas);
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -506,8 +589,10 @@ public class INICIO extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable jtAreaEspecialidad;
     private javax.swing.JTable jtCentroSalud;
+    private javax.swing.JTable jtConsultas;
     private javax.swing.JTable jtEnfermedades;
     private javax.swing.JTable jtEspecialidades;
     private javax.swing.JTable jtMedicinas;

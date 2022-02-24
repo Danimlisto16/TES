@@ -4,6 +4,7 @@
  */
 package transaccionesOWL;
 
+import archivos.archivo;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import org.apache.jena.ontology.OntModel;
@@ -33,18 +34,10 @@ public class transaccionesOWL{
     } 
     
     
-    public ResultSet primeraConsulta(){
+    public ResultSet cargarConsulta(String path){
+        archivo ar = new archivo();
         System.out.println("PRUEBA ONTOLOGÍAS");
-        String queryString = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"+ 
-                             "PREFIX ont: <http://www.semanticweb.org/dyyysof/ontologies/2022/1/untitled-ontology-25#>" +
-                             "SELECT ?codigo ?nombre ?cedula ?edad" + 
-                             "		WHERE {" +
-                             "?p rdf:type ont:persalud."+
-                             "?p ont:codigo ?codigo."+
-                             "?p ont:nombre ?nombre."+
-                             "?p ont:cedula ?cedula."+
-                             "?p ont:edad ?edad."+
-                                                    "}";        
+        String queryString = ar.leerArchivo(path);        
         Query query = QueryFactory.create(queryString);
         QueryExecution qe = QueryExecutionFactory.create(query,conexionOWL());
         ResultSet results = qe.execSelect();
